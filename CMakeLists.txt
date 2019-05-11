@@ -2,7 +2,9 @@
 cmake_minimum_required(VERSION 3.8)
 enable_language(CXX)
 
-SET(BOOST_ROOT "${CMAKE_SOURCE_DIR}/thirdparty/boost_1_70_0" CACHE PATH "Root dir of boost")
+IF (WIN32)
+    SET(BOOST_ROOT "${CMAKE_SOURCE_DIR}/thirdparty/boost_1_70_0" CACHE PATH "Root dir of boost")
+ENDIF()
 
 find_package(Boost REQUIRED COMPONENTS unit_test_framework program_options)
 
