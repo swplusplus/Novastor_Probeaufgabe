@@ -1,9 +1,11 @@
-﻿# CMakeList.txt : CMake project for Novastor_Probeaufgabe, include source and define
-# project specific logic here.
-#
-cmake_minimum_required (VERSION 3.8)
+﻿project(Novastor_Probeaufgabe)
+cmake_minimum_required(VERSION 3.8)
+enable_language(CXX)
 
-# Add source to this project's executable.
-add_executable (Novastor_Probeaufgabe "Novastor_Probeaufgabe.cpp" "Novastor_Probeaufgabe.h")
+SET(BOOST_ROOT "${CMAKE_SOURCE_DIR}/thirdparty/boost_1_70_0" CACHE PATH "Root dir of boost")
 
-# TODO: Add tests and install targets if needed.
+find_package(Boost REQUIRED COMPONENTS unit_test_framework program_options)
+
+add_executable(Novastor_Probeaufgabe "Novastor_Probeaufgabe.cpp" "Novastor_Probeaufgabe.h")
+target_link_libraries(Novastor_Probeaufgabe Boost::program_options Boost::disable_autolinking)
+
