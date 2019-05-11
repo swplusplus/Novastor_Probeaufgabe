@@ -9,3 +9,11 @@ find_package(Boost REQUIRED COMPONENTS unit_test_framework program_options)
 add_executable(Novastor_Probeaufgabe "Novastor_Probeaufgabe.cpp" "Novastor_Probeaufgabe.h")
 target_link_libraries(Novastor_Probeaufgabe Boost::program_options Boost::disable_autolinking)
 
+add_executable(Novastor_Probeaufgabe_UT "Novastor_Probeaufgabe_UT.cpp")
+target_link_libraries(Novastor_Probeaufgabe_UT Boost::unit_test_framework Boost::disable_autolinking)
+
+
+include(CTest)
+
+add_test(Novastor_ProbeaufgabeRuns Novastor_Probeaufgabe)
+add_test(Novastor_Probeaufgabe_UTRuns Novastor_Probeaufgabe_UT)
