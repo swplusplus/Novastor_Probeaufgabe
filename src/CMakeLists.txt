@@ -13,7 +13,6 @@ target_link_libraries(Novastor_Probeaufgabe_lib Boost::program_options Boost::th
 
 add_executable(Novastor_Probeaufgabe
     "Novastor_Probeaufgabe.cpp"
-    "Novastor_Probeaufgabe.h"
     )
 
 
