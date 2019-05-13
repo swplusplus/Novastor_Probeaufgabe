@@ -5,6 +5,6 @@ LocalFilesystemWorker::LocalFilesystemWorker(const fs::path& workItem)
 {
 }
 
-void LocalFilesystemWorker::Work(lf::queue<WorkerBase*>& workQueue, lf::queue<FilesystemEntry>& outQueue)
+void LocalFilesystemWorker::Work(WorkQueueV& workQueue, OutQueueV& outQueue)
 {
 }

@@ -1,18 +1,20 @@
 #pragma once
 
 #include <filesystem>
-#include <boost/lockfree/queue.hpp>
+#include <boost/thread/concurrent_queues/queue_views.hpp>
 #include "model/FileSystemEntry.h"
 
-namespace lf = boost::lockfree;
 namespace fs = std::filesystem;
-
-
+namespace bc = boost::concurrent;
 
 class WorkerBase
 {
 public:
+	using WorkQueue = bc::sync_queue<WorkerBase*>;
+	using WorkQueueV = bc::queue_back_view<WorkQueue>;
+	using OutQueueV = bc::queue_back_view<FilesystemEntry::Queue>;
+
     virtual ~WorkerBase() {}
 
-	virtual void Work(lf::queue<WorkerBase*>& workQueue, lf::queue<FilesystemEntry>& outQueue) = 0;
+	virtual void Work(WorkQueueV& workQueue, OutQueueV& outQueue) = 0;
 };
