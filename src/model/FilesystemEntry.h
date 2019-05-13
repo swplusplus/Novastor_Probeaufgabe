@@ -14,20 +14,8 @@ struct FilesystemEntry
 	size_t m_sizeInBytes;
 };
 
-inline bool operator == (const FilesystemEntry& lhs, const FilesystemEntry& rhs)
-{
-	throw std::runtime_error("bool operator == (const FilesystemEntry& lhs, const FilesystemEntry& rhs): not yet implemented!");
-	return false;
-}
+bool operator == (const FilesystemEntry& lhs, const FilesystemEntry& rhs);
 
-inline bool operator < (const FilesystemEntry& lhs, const FilesystemEntry& rhs)
-{
-	throw std::runtime_error("bool operator < (const FilesystemEntry& lhs, const FilesystemEntry& rhs): not yet implemented!");
-	return false;
-}
+bool operator < (const FilesystemEntry& lhs, const FilesystemEntry& rhs);
 
-inline std::ostream& operator << (std::ostream& out, const FilesystemEntry& entry)
-{
-	throw std::runtime_error("std::ostream& operator << (std::ostream& out, const FilesystemEntry& entry): not yet implemented!");
-	return out;
-}
+std::ostream& operator << (std::ostream& out, const FilesystemEntry& entry);

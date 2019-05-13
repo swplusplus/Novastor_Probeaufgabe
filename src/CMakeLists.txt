@@ -1,6 +1,7 @@
 ﻿add_library(Novastor_Probeaufgabe_lib STATIC
 	"collector/Collector.cpp"
 	"collector/Collector.h"
+	"model/FilesystemEntry.cpp"
 	"model/FilesystemEntry.h"
     "worker/LocalFilesystemWorker.cpp"
     "worker/LocalFilesystemWorker.h"
