@@ -7,7 +7,7 @@ if (WIN32)
     set(BOOST_ROOT "${CMAKE_SOURCE_DIR}/thirdparty/boost_1_70_0" CACHE PATH "Root dir of boost")
 endif()
 
-find_package(Boost REQUIRED COMPONENTS unit_test_framework program_options)
+find_package(Boost REQUIRED COMPONENTS unit_test_framework program_options thread)
 
 include_directories("${CMAKE_SOURCE_DIR}/src")
 
