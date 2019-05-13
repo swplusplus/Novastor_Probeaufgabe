@@ -1,8 +1,9 @@
 add_executable(Novastor_Probeaufgabe_UT
 	"Novastor_Probeaufgabe_UT.cpp"
-	"Collector.cpp"
-	"LocalFilesystemWorker.cpp"
-	"WorkerPool.cpp")
+	"Collector_UT.cpp"
+	"LocalFilesystemWorker_UT.cpp"
+	"WorkerPool_UT.cpp"
+	)
 
 target_link_libraries(Novastor_Probeaufgabe_UT Boost::unit_test_framework Boost::disable_autolinking)
 
