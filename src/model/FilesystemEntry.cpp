@@ -34,9 +34,13 @@ std::ostream& operator << (std::ostream& out, const FilesystemEntry& entry)
     time_t tt = std::chrono::duration_cast<seconds>(entry.m_lastWriteTime.time_since_epoch()).count();
     struct tm stm; 
     localtime_s(&stm, &tt);
-    size_t bs = strftime(nullptr, 0, "%FT%T+%z", &stm);
+    size_t bs = 26;
     std::unique_ptr<char[]> buf{new char[bs]};
-    strftime(buf.get(), bs, "%FT%T+%z", &stm); 
+    while (strftime(buf.get(), bs, "%FT%T%z", &stm) == 0 && bs < 1000)
+    {
+        bs *=2;
+        buf.reset(new char[bs]);
+    }
     out << '"' << entry.m_filename << "\" ; "sv << buf << " ; "sv << entry.m_sizeInBytes;
 	return out;
 }
