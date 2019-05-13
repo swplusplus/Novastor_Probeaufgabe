@@ -75,9 +75,9 @@ BOOST_FIXTURE_TEST_CASE(scanFolderWithSubfolders, TestFixture)
 	}
 
 	BOOST_TEST_REQUIRE(outQueue.size() == 3);
-	CompareEntries({ (folderPath / "1.txt").string(), fs::file_time_type {}, 0 }, outQueue.pull());
-	CompareEntries({ (folderPath / "1").string(), fs::file_time_type {}, 0 }, outQueue.pull());
-	CompareEntries({ (folderPath / "2.2").string(), fs::file_time_type {}, 0 }, outQueue.pull());
+	CompareEntries({ (folderPath / "1" / "1.txt").string(), fs::file_time_type {}, 0 }, outQueue.pull());
+	CompareEntries({ (folderPath / "2" / "1").string(), fs::file_time_type {}, 0 }, outQueue.pull());
+	CompareEntries({ (folderPath / "2" / "2.2").string(), fs::file_time_type {}, 0 }, outQueue.pull());
 }
 
 BOOST_AUTO_TEST_SUITE_END()
