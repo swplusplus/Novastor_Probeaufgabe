@@ -1,18 +1,29 @@
 #include "Collector.h"
 
-Collector::Collector(const FilesystemEntry::Queue& outQueue)
-{
-    throw std::runtime_error("Collector::Collector(const FilesystemEntry::Queue& outQueue): not yet implemented");
-}
+Collector::Collector()
+{}
 
 
 std::list<FilesystemEntry> Collector::GetSortedEntries()
 {
-    throw std::runtime_error("Collector::GetSortedEntries: not yet implemented");
-    return {};
+    collectedEntries.sort();
+    return collectedEntries;
 }
 
-void Collector::Run()
+void Collector::Run(FilesystemEntry::Queue& outQueue)
 {
-    throw std::runtime_error("Collector::Run: not yet implemented");
+    try
+    {
+        while (true)
+        {
+            Process(outQueue.pull());
+        }
+    }
+    catch(const boost::concurrent::sync_queue_is_closed& e)
+    {}
+}
+
+void Collector::Process(FilesystemEntry&& entry)
+{
+    collectedEntries.emplace_back(entry);
 }

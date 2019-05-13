@@ -9,10 +9,13 @@ class Collector
 {
 public:
 
-    Collector(const FilesystemEntry::Queue& outQueue);
+    Collector();
 
-    void Run();
+    void Run(FilesystemEntry::Queue& outQueue);
 
     std::list<FilesystemEntry> GetSortedEntries();
+private:
+    void Process(FilesystemEntry&& entry);
 
+    std::list<FilesystemEntry> collectedEntries;
 };

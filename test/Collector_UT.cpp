@@ -12,7 +12,7 @@ BOOST_AUTO_TEST_CASE(sorting_test, *boost::unit_test::timeout(2))
 	using E = FilesystemEntry;
 	using D = fs::file_time_type;
 	FilesystemEntry::Queue queue;
-	Collector collector(queue);
+	Collector collector;
 
 	// std::string m_filename;
 	// fs::file_time_type m_lastWriteTime;
@@ -31,7 +31,7 @@ BOOST_AUTO_TEST_CASE(sorting_test, *boost::unit_test::timeout(2))
 		queue.push(e);
 	}
 	queue.close();
-	collector.Run();
+	collector.Run(queue);
 	entries.sort();
 	std::list<FilesystemEntry> result = collector.GetSortedEntries();
 
