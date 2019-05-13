@@ -1,6 +1,6 @@
 #pragma once
 
-#include "model/FileSystemEntry.h"
+#include "model/FilesystemEntry.h"
 
 #include <boost/lockfree/queue.hpp>
 #include <list>
