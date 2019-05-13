@@ -3,19 +3,16 @@
 #include "model/FilesystemEntry.h"
 
 #include <boost/lockfree/queue.hpp>
-#include <list>
+#include <set>
 
 class Collector
 {
 public:
-
-    Collector();
-
     void Run(FilesystemEntry::Queue& outQueue);
 
-    std::list<FilesystemEntry> GetSortedEntries();
+    const std::set<FilesystemEntry>& GetSortedEntries();
 private:
     void Process(FilesystemEntry&& entry);
 
-    std::list<FilesystemEntry> collectedEntries;
+    std::set<FilesystemEntry> collectedEntries;
 };

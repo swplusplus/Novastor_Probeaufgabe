@@ -1,12 +1,8 @@
 #include "Collector.h"
 
-Collector::Collector()
-{}
 
-
-std::list<FilesystemEntry> Collector::GetSortedEntries()
+const std::set<FilesystemEntry>& Collector::GetSortedEntries()
 {
-    collectedEntries.sort();
     return collectedEntries;
 }
 
@@ -25,5 +21,5 @@ void Collector::Run(FilesystemEntry::Queue& outQueue)
 
 void Collector::Process(FilesystemEntry&& entry)
 {
-    collectedEntries.emplace_back(entry);
+    collectedEntries.insert(entry);
 }

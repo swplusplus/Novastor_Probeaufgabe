@@ -33,7 +33,7 @@ BOOST_AUTO_TEST_CASE(sorting_test, *boost::unit_test::timeout(2))
 	queue.close();
 	collector.Run(queue);
 	entries.sort();
-	std::list<FilesystemEntry> result = collector.GetSortedEntries();
+	const auto& result = collector.GetSortedEntries();
 
 	BOOST_TEST(entries == result, boost::test_tools::per_element());
 }
