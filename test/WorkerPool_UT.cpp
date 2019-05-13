@@ -29,8 +29,8 @@ BOOST_AUTO_TEST_CASE(poolTest)
 
 BOOST_AUTO_TEST_CASE(poolStressTest)
 {
-	//WorkerPoolTestProxy proxy{ std::thread::hardware_concurrency(), {"C:\\"} };
-	WorkerPoolTestProxy proxy{ 1, {"C:\\"} };
+	WorkerPoolTestProxy proxy{ std::thread::hardware_concurrency(), {"C:\\"} };
+	//WorkerPoolTestProxy proxy{ 1, {"C:\\"} };
 	BOOST_TEST_REQUIRE(proxy.OutQueue().size() == 3);
 }
 

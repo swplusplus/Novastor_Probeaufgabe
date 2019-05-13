@@ -24,7 +24,7 @@ void LocalFilesystemWorker::Run(WorkQueue& workQueue, FilesystemEntry::Queue& ou
 			{
 				Work(workItem, workQueue, outQueue);
 			}
-			catch (const std::filesystem::filesystem_error& err)
+			catch (const std::exception& err)
 			{
 				std::cerr << "exception occurred while processing " << workItem << ": " << err.what() << std::endl;
 			}
@@ -38,17 +38,30 @@ void LocalFilesystemWorker::Work(const fs::path& workItem, WorkQueue& workQueue,
 {
 	for (fs::directory_iterator itend, it{ workItem }; it != itend; ++it)
 	{
-		if (it->is_directory())
+		try
 		{
-			workQueue.push(it->path());
+			if (it->exists())
+			{
+				if (it->is_directory())
+				{
+					workQueue.push(it->path());
+				}
+				else
+				{
+					outQueue.push(FilesystemEntry{ it->path().string(), it->last_write_time(), it->file_size() });
+				}
+			}
 		}
-		else if (it->is_regular_file())
+		catch (const std::exception& err)
 		{
-			outQueue.push(FilesystemEntry{ it->path().string(), it->last_write_time(), it->file_size() });
-		}
-		else
-		{
-			throw std::exception{ ("found an unhandled file or directory entry: " + it->path().string()).c_str()};
+			try
+			{
+				std::cerr << "exception occurred while processing " << *it << ": " << err.what() << std::endl;
+			}
+			catch (const std::exception& err)
+			{
+				std::cerr << "exception occurred: " << err.what() << std::endl;
+			}
 		}
 	}
 }
