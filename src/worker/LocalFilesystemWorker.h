@@ -1,17 +1,25 @@
 #pragma once
-#include "WorkerBase.h"
+#include <filesystem>
+#include <memory>
+#include <thread>
+#include <boost/thread/concurrent_queues/queue_views.hpp>
+#include "model/FileSystemEntry.h"
 
-class LocalFilesystemWorker : public WorkerBase
+namespace fs = std::filesystem;
+namespace bc = boost::concurrent;
+
+class LocalFilesystemWorker
 {
 public:
-	LocalFilesystemWorker(const fs::path& workItem);
+	using WorkQueue = bc::sync_queue<fs::path>;
 
-	// Inherited via WorkerBase
-	virtual void Work(WorkQueueV& workQueue, OutQueueV& outQueue) override;
+	void Start(WorkQueue& workQueue, FilesystemEntry::Queue& outQueue);
 
+	void Work(const fs::path& workItem, WorkQueue& workQueue, FilesystemEntry::Queue& outQueue);
 private:
+	void Run(WorkQueue& workQueue, FilesystemEntry::Queue& outQueue);
 
-	fs::path m_workItem;
+	std::thread m_theThread;
 };
 
 

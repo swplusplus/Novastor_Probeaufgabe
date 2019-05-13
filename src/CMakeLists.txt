@@ -2,12 +2,10 @@
 	"collector/Collector.cpp"
 	"collector/Collector.h"
 	"model/FilesystemEntry.h"
-    "worker/WorkerBase.cpp"
-    "worker/WorkerBase.h"
     "worker/LocalFilesystemWorker.cpp"
     "worker/LocalFilesystemWorker.h"
-	"worker/WorkerThread.cpp"
-	"worker/WorkerThread.h"
+	"workerPool/WorkerPool.h"
+	"workerPool/WorkerPool.cpp"
     )
 
 target_link_libraries(Novastor_Probeaufgabe_lib Boost::program_options Boost::thread Boost::disable_autolinking)

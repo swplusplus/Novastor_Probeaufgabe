@@ -7,7 +7,7 @@ namespace fs = std::filesystem;
 
 struct TestFixture
 {
-	WorkerBase::WorkQueue workQueue;
+	LocalFilesystemWorker::WorkQueue workQueue;
 	FilesystemEntry::Queue outQueue;
 };
 
@@ -23,9 +23,9 @@ BOOST_FIXTURE_TEST_CASE(scanFolder0Files, TestFixture)
 {
 	fs::path folderPath = test_base_dir / "testfolder/0";
 
-	LocalFilesystemWorker worker{ folderPath };
+	LocalFilesystemWorker worker;
 
-	BOOST_CHECK_NO_THROW(worker.Work(WorkerBase::WorkQueueV{ workQueue }, WorkerBase::OutQueueV{ outQueue }));
+	BOOST_CHECK_NO_THROW(worker.Work(folderPath, workQueue, outQueue));
 	BOOST_TEST(workQueue.empty());
 	BOOST_TEST(outQueue.empty());
 }
@@ -34,9 +34,9 @@ BOOST_FIXTURE_TEST_CASE(scanFolder1File, TestFixture)
 {
 	fs::path folderPath = test_base_dir / "testfolder/1";
 
-	LocalFilesystemWorker worker{ folderPath };
+	LocalFilesystemWorker worker;
 
-	BOOST_CHECK_NO_THROW(worker.Work(WorkerBase::WorkQueueV{ workQueue }, WorkerBase::OutQueueV{ outQueue }));
+	BOOST_CHECK_NO_THROW(worker.Work(folderPath, workQueue, outQueue));
 	BOOST_TEST(workQueue.empty());
 	BOOST_TEST_REQUIRE(outQueue.size() == 1);
 
@@ -47,9 +47,9 @@ BOOST_FIXTURE_TEST_CASE(scanFolder2Files, TestFixture)
 {
 	fs::path folderPath = test_base_dir / "testfolder/2";
 
-	LocalFilesystemWorker worker{ folderPath };
+	LocalFilesystemWorker worker;
 
-	BOOST_CHECK_NO_THROW(worker.Work(WorkerBase::WorkQueueV{ workQueue }, WorkerBase::OutQueueV{ outQueue }));
+	BOOST_CHECK_NO_THROW(worker.Work(folderPath, workQueue, outQueue));
 	BOOST_TEST(workQueue.empty());
 	BOOST_TEST_REQUIRE(outQueue.size() == 2);
 
@@ -62,16 +62,16 @@ BOOST_FIXTURE_TEST_CASE(scanFolderWithSubfolders, TestFixture)
 {
 	fs::path folderPath = test_base_dir / "testfolder";
 
-	LocalFilesystemWorker worker{ folderPath };
+	LocalFilesystemWorker worker;
 
-	BOOST_CHECK_NO_THROW(worker.Work(WorkerBase::WorkQueueV{ workQueue }, WorkerBase::OutQueueV{ outQueue }));
+	BOOST_CHECK_NO_THROW(worker.Work(folderPath, workQueue, outQueue));
 	BOOST_TEST_REQUIRE(workQueue.size() == 3);
 	BOOST_TEST(outQueue.empty());
 
 	while (!workQueue.empty())
 	{
 		auto w = workQueue.pull();
-		BOOST_CHECK_NO_THROW(w->Work(WorkerBase::WorkQueueV{ workQueue }, WorkerBase::OutQueueV{ outQueue }));
+		BOOST_CHECK_NO_THROW(worker.Work(w, workQueue, outQueue));
 	}
 
 	BOOST_TEST_REQUIRE(outQueue.size() == 3);

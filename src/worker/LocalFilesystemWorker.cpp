@@ -1,17 +1,26 @@
 #include "LocalFilesystemWorker.h"
 
-LocalFilesystemWorker::LocalFilesystemWorker(const fs::path& workItem)
-	: m_workItem(workItem)
+void LocalFilesystemWorker::Start(WorkQueue& workQueue, FilesystemEntry::Queue& outQueue)
 {
+	m_theThread = std::thread{ [&]() {Run(workQueue, outQueue); } };
 }
 
-void LocalFilesystemWorker::Work(WorkQueueV& workQueue, OutQueueV& outQueue)
+void LocalFilesystemWorker::Run(WorkQueue& workQueue, FilesystemEntry::Queue& outQueue)
 {
-	for (fs::directory_iterator itend, it{ m_workItem }; it != itend; ++it)
+	while (true)
+	{
+		auto workItem = workQueue.pull();
+		Work(workItem, workQueue, outQueue);
+	}
+}
+
+void LocalFilesystemWorker::Work(const fs::path& workItem, WorkQueue& workQueue, FilesystemEntry::Queue& outQueue)
+{
+	for (fs::directory_iterator itend, it{ workItem }; it != itend; ++it)
 	{
 		if (it->is_directory())
 		{
-			workQueue.push(std::make_unique<LocalFilesystemWorker>(it->path()));
+			workQueue.push(it->path());
 		}
 		else if (it->is_regular_file())
 		{
