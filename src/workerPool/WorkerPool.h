@@ -1,4 +1,5 @@
 #pragma once
+#include "collector/Collector.h"
 #include "worker/LocalFilesystemWorker.h"
 #include <vector>
 #include <filesystem>
@@ -19,6 +20,8 @@ private:
 	LocalFilesystemWorker::WorkQueue m_workQueue;
 	FilesystemEntry::Queue m_outQueue;
 	boost::concurrent::sync_queue<bool> synchronizerQueue;
+	Collector m_collector;
+	std::thread m_collectorThread;
 };
 
 

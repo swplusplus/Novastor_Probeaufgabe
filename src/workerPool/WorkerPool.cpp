@@ -1,5 +1,9 @@
 #include "WorkerPool.h"
+
+#include "collector/Collector.h"
+
 #include <condition_variable>
+#include <iostream>
 
 WorkerPool::WorkerPool(size_t numWorker, const std::vector<std::filesystem::path>& paths)
 {
@@ -22,10 +26,17 @@ void WorkerPool::Join()
 	{
 		worker->Join();
 	}
+	m_outQueue.close();
+	m_collectorThread.join();
+	for (const auto& entry: m_collector.GetSortedEntries())
+	{
+		std::cout << entry << std::endl;
+	}
 }
 
 void WorkerPool::StartThreads(size_t numWorker)
 {
+	m_collectorThread = std::thread([&] {m_collector.Run(m_outQueue); });
 	for (size_t i = 0; i < numWorker; ++i)
 	{
 		synchronizerQueue.push(true);

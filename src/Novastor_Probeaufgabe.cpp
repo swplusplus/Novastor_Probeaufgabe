@@ -1,4 +1,6 @@
-﻿#include <boost/program_options.hpp>
+﻿#include "workerPool/WorkerPool.h"
+
+#include <boost/program_options.hpp>
 #include <filesystem>
 #include <iostream>
 #include <string>
@@ -14,7 +16,7 @@ public:
 
 		unsigned int cpus = std::thread::hardware_concurrency();
 		bool help = false;
-		std::vector<std::string> paths;
+		std::vector<std::string> pathList;
 		// Declare the supported options.
 		po::options_description desc("Options");
 		desc.add_options()
@@ -22,7 +24,7 @@ public:
 			("threads,t", po::value(&cpus)->default_value(cpus), "set number of threads to use");
 		po::options_description hidden("hidden options");
 		hidden.add_options()
-			("path", po::value(&paths), "path to search");
+			("path", po::value(&pathList), "path to search");
 
 		po::positional_options_description posOpts;
 		posOpts.add("path", -1);
@@ -46,10 +48,16 @@ public:
 		}
 
 		std::cout << "Using " << cpus << " threads" << std::endl;
-		for (const auto& p : paths)
+
+		for (const auto& p : pathList)
 		{
 			std::cout << "path: " << p << std::endl;
 		}
+
+		std::vector<std::filesystem::path> paths{pathList.begin(), pathList.end()};
+
+		WorkerPool workerPool(cpus, paths);
+		workerPool.Join();
 
 		return EXIT_SUCCESS;
 	}
