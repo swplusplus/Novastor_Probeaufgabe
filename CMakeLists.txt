@@ -12,3 +12,4 @@ find_package(Boost REQUIRED COMPONENTS unit_test_framework program_options)
 include_directories("${CMAKE_SOURCE_DIR}/src")
 
 add_subdirectory(src)
+add_subdirectory(test)
