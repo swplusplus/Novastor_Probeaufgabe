@@ -1,0 +1,4 @@
+#pragma once
+#include <filesystem>
+
+const std::filesystem test_base_dir = "@PROJECT_SOURCE_DIR@/test/data";
