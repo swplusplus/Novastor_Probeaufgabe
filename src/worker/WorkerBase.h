@@ -13,7 +13,6 @@ class WorkerBase
 {
 public:
     virtual ~WorkerBase() {}
-    WorkerBase();
 
 	virtual void Work(lf::queue<WorkerBase*>& workQueue, lf::queue<FilesystemEntry>& outQueue) = 0;
 };

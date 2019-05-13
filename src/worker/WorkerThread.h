@@ -1,4 +1,6 @@
 #pragma once
+#include <boost/lockfree/queue.hpp>
+#include "model/FileSystemEntry.h"
 
 namespace lf = boost::lockfree;
 
