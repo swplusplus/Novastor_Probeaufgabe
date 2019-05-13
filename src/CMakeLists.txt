@@ -12,7 +12,6 @@
 
 target_link_libraries(Novastor_Probeaufgabe_lib Boost::program_options Boost::thread Boost::disable_autolinking)
 
-
 add_executable(Novastor_Probeaufgabe
     "Novastor_Probeaufgabe.cpp"
     "Novastor_Probeaufgabe.h"
@@ -20,10 +19,4 @@ add_executable(Novastor_Probeaufgabe
 
 
 target_link_libraries(Novastor_Probeaufgabe Novastor_Probeaufgabe_lib)
-
-include(CTest)
-
 add_test(Novastor_ProbeaufgabeRuns Novastor_Probeaufgabe)
-
-
-

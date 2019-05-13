@@ -13,8 +13,6 @@ add_executable(Novastor_Probeaufgabe_UT
 	"${PROJECT_BINARY_DIR}/Testdata.h"
 	)
 
-target_link_libraries(Novastor_Probeaufgabe_UT Novastor_Probeaufgabe_lib Boost::unit_test_framework Boost::disable_autolinking)
-
-include(CTest)
+target_link_libraries(Novastor_Probeaufgabe_UT Novastor_Probeaufgabe_lib Boost::unit_test_framework Boost::thread Boost::disable_autolinking)
 
 add_test(Novastor_Probeaufgabe_UTRuns Novastor_Probeaufgabe_UT)
