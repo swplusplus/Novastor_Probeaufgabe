@@ -4,7 +4,12 @@
 
 namespace
 {
-    template <typename... T>
+#ifdef WIN32
+	constexpr auto SEC_TO_UNIX_EPOCH = 11644473600LL;
+#else
+	constexpr auto SEC_TO_UNIX_EPOCH = 0LL;
+#endif
+	template <typename... T>
     auto creftuple(const T&... p)
     {
         return std::make_tuple(std::cref(p)...);
@@ -31,7 +36,7 @@ std::ostream& operator << (std::ostream& out, const FilesystemEntry& entry)
 {
     using std::chrono::seconds;
     using namespace std::literals::string_view_literals;
-    time_t tt = std::chrono::duration_cast<seconds>(entry.m_lastWriteTime.time_since_epoch()).count();
+    time_t tt = std::chrono::duration_cast<seconds>(entry.m_lastWriteTime.time_since_epoch()).count() - SEC_TO_UNIX_EPOCH;
     struct tm stm; 
     localtime_s(&stm, &tt);
     size_t bs = 26;
