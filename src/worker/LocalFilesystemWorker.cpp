@@ -26,7 +26,7 @@ void LocalFilesystemWorker::Run(WorkQueue& workQueue, FilesystemEntry::Queue& ou
 			}
 			catch (const std::exception& err)
 			{
-				std::cerr << "exception occurred while processing " << workItem << ": " << err.what() << std::endl;
+				std::cerr << "directory " << workItem << ": " << err.what() << std::endl;
 			}
 
 		}
@@ -53,11 +53,11 @@ void LocalFilesystemWorker::Work(const fs::path& workItem, WorkQueue& workQueue,
 		{
 			try
 			{
-				std::cerr << "exception occurred while processing " << it << ": " << err.what() << std::endl;
+				std::cerr << it << ": " << err.what() << std::endl;
 			}
 			catch (const std::exception& err)
 			{
-				std::cerr << "exception occurred: " << err.what() << std::endl;
+				std::cerr << err.what() << std::endl;
 			}
 		}
 	}
