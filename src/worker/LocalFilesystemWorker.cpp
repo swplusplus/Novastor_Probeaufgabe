@@ -36,27 +36,24 @@ void LocalFilesystemWorker::Run(WorkQueue& workQueue, FilesystemEntry::Queue& ou
 
 void LocalFilesystemWorker::Work(const fs::path& workItem, WorkQueue& workQueue, FilesystemEntry::Queue& outQueue)
 {
-	for (fs::directory_iterator itend, it{ workItem }; it != itend; ++it)
+	for (const auto& it : fs::directory_iterator{workItem})
 	{
 		try
 		{
-			if (it->exists())
+			if (it.is_directory())
 			{
-				if (it->is_directory())
-				{
-					workQueue.push(it->path());
-				}
-				else
-				{
-					outQueue.push(FilesystemEntry{ it->path().string(), it->last_write_time(), it->file_size() });
-				}
+				workQueue.push(it.path());
+			}
+			else
+			{
+				outQueue.push(FilesystemEntry{ it.path().string(), it.last_write_time(), it.file_size() });
 			}
 		}
 		catch (const std::exception& err)
 		{
 			try
 			{
-				std::cerr << "exception occurred while processing " << *it << ": " << err.what() << std::endl;
+				std::cerr << "exception occurred while processing " << it << ": " << err.what() << std::endl;
 			}
 			catch (const std::exception& err)
 			{
