@@ -3,7 +3,7 @@
 #include <memory>
 #include <thread>
 #include <boost/thread/concurrent_queues/queue_views.hpp>
-#include "model/FileSystemEntry.h"
+#include "model/FilesystemEntry.h"
 
 namespace fs = std::filesystem;
 namespace bc = boost::concurrent;
