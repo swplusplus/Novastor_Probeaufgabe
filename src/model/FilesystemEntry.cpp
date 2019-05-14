@@ -1,6 +1,7 @@
-#include "FilesystemEntry.h"
+    #include "FilesystemEntry.h"
 #include <string_view>
 #include <tuple>
+#include <time.h>
 
 namespace
 {
@@ -8,7 +9,7 @@ namespace
 	constexpr auto SEC_TO_UNIX_EPOCH = 11644473600LL;
     #define localtime_fun(time_t, tm) localtime_s(time_t, tm)
 #else
-	constexpr auto SEC_TO_UNIX_EPOCH = 0LL;
+	constexpr auto SEC_TO_UNIX_EPOCH = -6437664000LL;
     #define localtime_fun(time_t, tm) localtime_r(tm, time_t)
 #endif
 	template <typename... T>

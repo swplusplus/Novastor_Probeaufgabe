@@ -5,6 +5,8 @@ set(CMAKE_CXX_STANDARD 17)
 
 if (WIN32)
     set(BOOST_ROOT "${CMAKE_SOURCE_DIR}/thirdparty/boost_1_70_0" CACHE PATH "Root dir of boost")
+else()
+    set(BOOST_ROOT "~/libs/boost/boost_1_70_0" CACHE PATH "Root dir of boost")
 endif()
 
 set(Boost_USE_STATIC_LIBS   ON)
