@@ -4,7 +4,7 @@
 
 - CMake >= 3.8
 - for Windows MS Visual Studio 2017 or MS Visual Studio 2019 compiler is required to build using the prebuilt libraries under the thirdparty folder
-- for linux the boost-dev package (1.70.0?) must be installed
+- tested under ubuntu linux with boost 1.70.0 and g++ 9.0.1
 
 ## Design
 
