@@ -15,7 +15,7 @@ void Collector::Run(FilesystemEntry::Queue& outQueue)
             Process(outQueue.pull());
         }
     }
-    catch(const boost::concurrent::sync_queue_is_closed& e)
+    catch(const boost::concurrent::sync_queue_is_closed&)
     {}
 }
 

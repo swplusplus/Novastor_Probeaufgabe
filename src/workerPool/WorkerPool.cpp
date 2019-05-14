@@ -22,11 +22,13 @@ void WorkerPool::Join()
 	{
 		std::this_thread::sleep_for(100ms);
 	}
+	// an empty synchronizerQueue means all workers are waiting on an empty workQueue, so we can safely close it now.
 	m_workQueue.close();
 	for (auto& worker : m_worker)
 	{
 		worker->Join();
 	}
+	// also close the outQueue, the collector will pull all remaining entries and then terminate the collector thread.
 	m_outQueue.close();
 	m_collectorThread.join();
 	if (m_output)

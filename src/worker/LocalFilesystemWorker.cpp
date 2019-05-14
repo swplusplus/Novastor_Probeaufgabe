@@ -15,7 +15,11 @@ void LocalFilesystemWorker::Run(WorkQueue& workQueue, FilesystemEntry::Queue& ou
 			fs::path workItem;
 			if (workQueue.nonblocking_pull(workItem) != boost::concurrent::queue_op_status::success)
 			{
-				syncQueue.pull();
+				// pull ourself out of the queue, which is currently empty. 
+				// there may come more work, only when this syncQueue is empty we can be sure the will be no more work, 
+				// because all workers are waiting here, thus no one can generate additional work.
+				// The workerPool will detect the empty syncQueue and closes the workQueue, which ends the blocking pull call by exception.
+				syncQueue.pull(); 
 				workItem = workQueue.pull();
 				syncQueue.push(true);
 			}
@@ -30,7 +34,7 @@ void LocalFilesystemWorker::Run(WorkQueue& workQueue, FilesystemEntry::Queue& ou
 			}
 
 		}
-	} catch (const boost::concurrent::sync_queue_is_closed&)
+	} catch (const boost::concurrent::sync_queue_is_closed&) // the queue is closed by the WorkerPool, this is a graceful termination.
 	{ }
 }
 
