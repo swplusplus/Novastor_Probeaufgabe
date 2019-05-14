@@ -8,7 +8,7 @@ class WorkerPool
 {
 	friend class WorkerPoolTestProxy;
 public:
-	WorkerPool(size_t numWorker, const std::vector<std::filesystem::path>& paths);
+	WorkerPool(size_t numWorker, const std::vector<std::filesystem::path>& paths, std::ostream* output);
 
 	void Join();
 
@@ -22,6 +22,7 @@ private:
 	boost::concurrent::sync_queue<bool> synchronizerQueue;
 	Collector m_collector;
 	std::thread m_collectorThread;
+	std::ostream* m_output;
 };
 
 

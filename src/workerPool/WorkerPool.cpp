@@ -5,7 +5,8 @@
 #include <condition_variable>
 #include <iostream>
 
-WorkerPool::WorkerPool(size_t numWorker, const std::vector<std::filesystem::path>& paths)
+WorkerPool::WorkerPool(size_t numWorker, const std::vector<std::filesystem::path>& paths, std::ostream* output)
+	: m_output(output)
 {
 	for (const auto& path : paths)
 	{
@@ -28,9 +29,12 @@ void WorkerPool::Join()
 	}
 	m_outQueue.close();
 	m_collectorThread.join();
-	for (const auto& entry: m_collector.GetSortedEntries())
+	if (m_output)
 	{
-		std::cout << entry << std::endl;
+		for (const auto& entry : m_collector.GetSortedEntries())
+		{
+			(*m_output) << entry << std::endl;
+		}
 	}
 }
 

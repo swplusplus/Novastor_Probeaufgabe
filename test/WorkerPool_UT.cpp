@@ -6,7 +6,7 @@ class WorkerPoolTestProxy
 {
 public:
 	WorkerPoolTestProxy(size_t numWorker, const std::vector<std::filesystem::path>& paths)
-		: m_pool(numWorker, paths)
+		: m_pool(numWorker, paths, nullptr)
 	{}
 
 	const FilesystemEntry::Queue& OutQueue()
