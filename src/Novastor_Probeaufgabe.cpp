@@ -62,8 +62,8 @@ public:
 	{
 		using namespace std::string_view_literals;
 		std::filesystem::path path(argv0);
-		std::cout << "Synopsis: "sv << path.filename() << " [Options] [paths]\n"sv << std::endl;
-		std::cout << m_desc << "\n";
+		out << "Synopsis: "sv << path.filename() << " [Options] [paths]\n"sv << std::endl;
+		out << m_desc << "\n";
 	}
 
 private:
